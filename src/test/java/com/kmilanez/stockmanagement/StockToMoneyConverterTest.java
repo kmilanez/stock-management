@@ -38,4 +38,14 @@ class StockToMoneyConverterTest {
         assertEquals(1.1, wallet.getBalance());
     }
 
+    @Test
+    void itShouldHaveBalanceOfZero() {
+        var converter = new StockToMoneyConverter();
+        var wallet = new Wallet();
+
+        converter.convert(List.of(StockNames.STOCK_E), wallet);
+        
+        assertEquals(0, wallet.getBalance());
+    }
+
 }
