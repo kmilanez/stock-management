@@ -1,22 +1,30 @@
 package com.kmilanez.stockmanagement;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class Wallet {
 
-    private Integer balance;
+    // Some floating point operations will compound the round-off error present in these floating point numbers.
+    private BigDecimal balance;
+
+    private BigDecimal createNumber(Double amount) {
+        return new BigDecimal(amount).setScale(1, RoundingMode.DOWN);
+    }
 
     public Wallet() {
-        this.balance = 0;
+        this.balance = createNumber(0.0);
     }
 
-    public Wallet(Integer initialBalance) {
-        this.balance = initialBalance;
+    public Wallet(Double initialBalance) {
+        this.balance = createNumber(initialBalance);
     }
 
-    public void addMoney(Integer ammount) {
-        this.balance += 1;
+    public void addMoney(Double amount) {
+        this.balance = this.balance.add(createNumber(amount));
     }
 
-    public Integer getBalance() {
-        return this.balance;
+    public Double getBalance() {
+        return this.balance.doubleValue();
     }
 }
