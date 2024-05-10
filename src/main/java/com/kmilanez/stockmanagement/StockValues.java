@@ -1,31 +1,28 @@
 package com.kmilanez.stockmanagement;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.xyz.models.Stock;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class StockValues {
     
-    private static final List<ValuePair<String, Double>> stocks = new ArrayList<>();
+    private static final Map<String, Double> STOCKS_STORE = new HashMap<>(20000000);
 
     static {
-        stocks.add(new ValuePair<String, Double>("StockA", Double.valueOf(1.1)));
-        stocks.add(new ValuePair<String, Double>("StockB", Double.valueOf(2)));
-        stocks.add(new ValuePair<String, Double>("StockC", Double.valueOf(2.5)));
-        stocks.add(new ValuePair<String, Double>("StockD", Double.valueOf(-1.1)));
-        stocks.add(new ValuePair<String, Double>("StockE", Double.valueOf(-3)));
+        for (Stock stock : Stock.values()) {
+            STOCKS_STORE.put(stock.name(), stock.value());
+        }
     }
 
-    public static void addStock(ValuePair<String, Double> stock) {
-        stocks.add(stock);
+    public static void addStock(String name, double value) {
+        STOCKS_STORE.put(name, value);
     }
 
     public static Double findStockValuesByStockName(String stockName) {
-        for (ValuePair<String, Double> stockValue : stocks) {
-            if (stockValue.getFirst() == stockName) {
-                return stockValue.getSecond();
-            }
-        }
-        return 0.0;
+        // else part of "StockToMoneyConverter" which returned 3.0 when stock does not matches list of stocks present is moved here to pass 3.0 as default
+        // but since test was failing so I am assuming this 3.0 was unreachable : https://github.com/kmilanez/stock-management/blob/main/src/test/java/com/kmilanez/stockmanagement/StockValuesTest.java#L21
+        return STOCKS_STORE.getOrDefault(stockName, 0.0);
     }
 
 }
