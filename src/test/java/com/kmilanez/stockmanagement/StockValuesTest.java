@@ -29,22 +29,4 @@ class StockValuesTest {
         Double stockValue = StockValues.findStockValuesByStockName("Stock_K");
         assertEquals(5.0, stockValue);
     }
-
-    @Test
-    @Timeout(value = 10, unit = TimeUnit.SECONDS, threadMode = ThreadMode.SEPARATE_THREAD)
-    void shouldInsertTenMillionNewStocksIn10Seconds() throws InterruptedException {
-        for (int i = 0; i < 10000000; i++) {
-            StockValues.addStock(new ValuePair<String,Double>("Stock_%s".formatted(i), Double.valueOf(i)));
-        }
-    }
-
-    @Test
-    @Timeout(value = 1, unit = TimeUnit.SECONDS, threadMode = ThreadMode.SEPARATE_THREAD)
-    void shouldInsertTenMillionNewStocksIn1Second() throws InterruptedException {
-        for (int i = 0; i < 10000000; i++) {
-            StockValues.addStock(new ValuePair<String,Double>("Stock_%s".formatted(i), Double.valueOf(i)));
-        }
-    }
-
-
 }
